@@ -5,22 +5,32 @@ const bcrypt = require('bcrypt');
 const helmet = require('helmet');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const cors = require("cors");
+const User = require('./schema/userSchema')
 
 const app = express();
 const port = 3000;
 
 // Replace 'your_mongodb_url_here' with your actual MongoDB connection string
-const mongodbUrl = `${process.env.MONGODB_URL}`;
-mongoose.connect(mongodbUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("connected!");
+  });
 
-const User = mongoose.model('User', userSchema);
+
+// const User = mongoose.model('User', userSchema);
 
 app.use(express.json());
 app.use(helmet());
 app.use(cookieParser());
+// app.use(cors({
+//   origin:`${process.env.CLIENT_URL}`,
+//   credentials:true
+// }));
+app.use(cors());
+
 
 // Generate JWT Token
 const generateToken = (user) => {
@@ -33,7 +43,7 @@ const generateToken = (user) => {
 
 //route for user registration
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // Check if user already exists
@@ -49,6 +59,7 @@ app.post('/register', async (req, res) => {
     const newUser = new User({
       username,
       password: hashedPassword,
+      email
     });
 
     await newUser.save();
@@ -88,6 +99,10 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.get('/',(req,res)=>{
+  res.send('Hi i am listening you');
+})
+
 app.listen(process.env.PORT || port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
