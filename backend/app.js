@@ -11,7 +11,6 @@ const User = require('./schema/userSchema')
 const app = express();
 const port = 3000;
 
-// Replace 'your_mongodb_url_here' with your actual MongoDB connection string
 mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -44,16 +43,19 @@ const generateToken = (user) => {
 //route for user registration
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
-
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ username });
+    const existingEmail = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ error: 'Username already exists' });
     }
+    if(existingEmail){
+      return res.status(409).json({ error: 'email already taken' });
+    }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, process.env.SALT_ROUND);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
     const newUser = new User({
@@ -69,6 +71,7 @@ app.post('/register', async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, maxAge: 259200000  }); // 3 days expiration
     res.json({ message: 'Registration successful!' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
