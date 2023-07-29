@@ -4,7 +4,8 @@
   "description": "this is backend of travel app",
   "main": "index.js",
   "scripts": {
-    "test": "nothing"
+    "test": "nothing",
+    "devStart": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
