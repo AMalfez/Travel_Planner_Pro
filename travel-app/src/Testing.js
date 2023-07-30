@@ -7,7 +7,8 @@ function Testing() {
   const [location, setLocation] = useState('');
   const [days, setDays] = useState('');
   const [date, setDate] = useState([]);
-  const [data,setData] = useState('')
+  const [data,setData] = useState('');
+  const [display, setDisplay] = useState(false)
   useEffect(()=>{
     const curr = Date.now();
     setDate([...formatDate(curr)]);
@@ -57,6 +58,7 @@ function Testing() {
       console.log(result.data.data);
       console.log(result.data.data.filter((elem)=> elem.result_type === 'things_to_do'));
       setData(result.data.data.filter((elem)=> elem.result_type === 'things_to_do'))
+      setDisplay(true);
     }
 
     
@@ -67,9 +69,7 @@ function Testing() {
           <input type='text' onChange={handleDays} value={days} name='Days' placeholder='Days' />
           <input type='submit' value='Submit Me' />
         </form>
-        {date.map((date)=>(
-          <Itinary date={date} />
-        ))}
+          {display && <Itinary date={date} data={data} />}
     </div>
   )
 }

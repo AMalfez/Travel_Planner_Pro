@@ -1,14 +1,21 @@
 .card__container{
-    border: 1px solid green;
+    /* border: 1px solid green; */
     display: flex;
+    margin-bottom: 30px;
+    align-items: center;
 }
 .card_img{
-    border: 1px solid red;
     width: 10%;
     aspect-ratio: 1/1;
 }
+.card_img>img{
+    width: 100%;
+}
 .card_details{
     margin-left: 30px;
+    border-bottom: 1px solid lightgrey;
+    width: 80%;
+    padding-left: 20px;
 }
 .edit-icon{
     color: lightgrey;
