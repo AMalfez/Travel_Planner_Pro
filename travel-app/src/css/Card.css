@@ -1,0 +1,20 @@
+.card__container{
+    border: 1px solid green;
+    display: flex;
+}
+.card_img{
+    border: 1px solid red;
+    width: 10%;
+    aspect-ratio: 1/1;
+}
+.card_details{
+    margin-left: 30px;
+}
+.edit-icon{
+    color: lightgrey;
+    cursor: pointer;
+    transition: color 0.4s ease;
+}
+.edit-icon:hover{
+    color: grey;
+}
