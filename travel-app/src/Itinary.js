@@ -9,7 +9,7 @@ export default function Itinary({date, data}){
             {date.map((dt)=>(
                 <div>
                 <p style={{fontWeight:'600',fontSize:'26px'}}>{dt}</p>
-                <Card data={data[date.indexOf(dt)]}/>
+                <Card data={data[date.indexOf(dt)<data.length-1?date.indexOf(dt):data.length-1]}/>
                 </div>
             ))}
             

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Itinary  from './Itinary';
+import './css/Testing.css'
 
 
 function Testing() {
@@ -58,16 +59,16 @@ function Testing() {
       console.log(result.data.data);
       console.log(result.data.data.filter((elem)=> elem.result_type === 'things_to_do'));
       setData(result.data.data.filter((elem)=> elem.result_type === 'things_to_do'))
-      setDisplay(true);
+      // setDisplay(true);
     }
 
     
   return (
-    <div>
+    <div className='testing__container'>
         <form onSubmit={handleSubmit} style={{marginBottom:'50px'}}>
-          <input type='text' onChange={handleLocation} value={location} name='location' placeholder='Destination' />
-          <input type='text' onChange={handleDays} value={days} name='Days' placeholder='Days' />
-          <input type='submit' value='Submit Me' />
+          <input className='input-destination' type='text' onChange={handleLocation} value={location} name='location' placeholder='Destination' />
+          <input className='input-days' type='text' onChange={handleDays} value={days} name='Days' placeholder='Days' />
+          <button type='submit'>Submit</button>
         </form>
           {display && <Itinary date={date} data={data} />}
     </div>
